@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from 'react';
+import Routes from './routes'
+import './sass/App.scss'
+import { Context } from './context/Context'
 
 function App() {
+  const [username, setUsername] = useState(null)
+  const [gameHash, setGameHash] = useState(null)
+  const usernameValue = useMemo(() => ({username, setUsername} ), [username, setUsername])
+  const gameHashValue = useMemo(() => ({gameHash, setGameHash} ), [gameHash, setGameHash])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Context.Provider value={{usernameValue, gameHashValue}}>
+        {Routes}
+      </Context.Provider>
     </div>
   );
 }
